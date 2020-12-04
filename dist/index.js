@@ -48,19 +48,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BilibiliLiveDanmu = void 0;
+exports.BiliBiliDanmu = void 0;
 var node_fetch_1 = __importDefault(require("node-fetch"));
 var websocket_1 = require("websocket");
 var events_1 = require("events");
 var zlib_1 = __importDefault(require("zlib"));
 var consts_1 = require("./consts");
-var BilibiliLiveDanmu = /** @class */ (function (_super) {
-    __extends(BilibiliLiveDanmu, _super);
-    function BilibiliLiveDanmu(roomId) {
+var BiliBiliDanmu = /** @class */ (function (_super) {
+    __extends(BiliBiliDanmu, _super);
+    function BiliBiliDanmu(roomId) {
         var _this = _super.call(this) || this;
         _this.roomId = 0;
         _this.realRoomId = 0;
@@ -71,7 +78,14 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
         _this.init();
         return _this;
     }
-    BilibiliLiveDanmu.prototype.init = function () {
+    BiliBiliDanmu.prototype.emit = function (event) {
+        var params = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            params[_i - 1] = arguments[_i];
+        }
+        return _super.prototype.emit.apply(this, __spreadArrays([event], params));
+    };
+    BiliBiliDanmu.prototype.init = function () {
         return __awaiter(this, void 0, void 0, function () {
             var res, json;
             return __generator(this, function (_a) {
@@ -93,7 +107,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.wsOnOpen = function () {
+    BiliBiliDanmu.prototype.wsOnOpen = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 this.initAuth();
@@ -101,7 +115,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.wsOnMessage = function (ev) {
+    BiliBiliDanmu.prototype.wsOnMessage = function (ev) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -113,7 +127,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.wsOnClose = function (ev) {
+    BiliBiliDanmu.prototype.wsOnClose = function (ev) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 console.log("连接关闭：", ev);
@@ -121,7 +135,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.wsOnError = function (ev) {
+    BiliBiliDanmu.prototype.wsOnError = function (ev) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 console.log("连接错误：", ev);
@@ -129,7 +143,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.initAuth = function () {
+    BiliBiliDanmu.prototype.initAuth = function () {
         return __awaiter(this, void 0, void 0, function () {
             var authConfig, bufferHead, bufferBody, packageSize, buffer;
             return __generator(this, function (_a) {
@@ -167,7 +181,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.initHeartbeat = function () {
+    BiliBiliDanmu.prototype.initHeartbeat = function () {
         return __awaiter(this, void 0, void 0, function () {
             var bufferHead;
             return __generator(this, function (_a) {
@@ -190,7 +204,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.initBufferHead = function () {
+    BiliBiliDanmu.prototype.initBufferHead = function () {
         return __awaiter(this, void 0, void 0, function () {
             var arrayBuffer, uIntBuffer;
             return __generator(this, function (_a) {
@@ -212,7 +226,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.initBufferBody = function (data) {
+    BiliBiliDanmu.prototype.initBufferBody = function (data) {
         return __awaiter(this, void 0, void 0, function () {
             var jsonString, buffer;
             return __generator(this, function (_a) {
@@ -222,7 +236,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.decodeMessage = function (data) {
+    BiliBiliDanmu.prototype.decodeMessage = function (data) {
         return __awaiter(this, void 0, void 0, function () {
             var uIntBuffer, opCode, _a, popularity, command;
             return __generator(this, function (_b) {
@@ -243,25 +257,25 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
                     case 2: return [4 /*yield*/, this.getPopularity(uIntBuffer)];
                     case 3:
                         popularity = _b.sent();
-                        this.emit("POPULARITY" /* POPULARITY */, popularity);
+                        this.emit('POPULARITY', popularity);
                         return [3 /*break*/, 8];
                     case 4: return [4 /*yield*/, this.decodeBodyData(uIntBuffer)];
                     case 5:
                         command = _b.sent();
-                        this.emit("COMMAND" /* COMMAND */, command);
+                        this.emit('COMMAND', command);
                         return [3 /*break*/, 8];
                     case 6:
-                        this.emit("SERVER_HEARTBEAT" /* SERVER_HEARTBEAT */);
+                        this.emit('SERVER_HEARTBEAT');
                         return [3 /*break*/, 8];
                     case 7:
-                        this.emit("UNKNOW_EVENT" /* UNKNOW_EVENT */);
+                        this.emit('UNKNOW_EVENT', uIntBuffer);
                         return [3 /*break*/, 8];
                     case 8: return [2 /*return*/];
                 }
             });
         });
     };
-    BilibiliLiveDanmu.prototype.decodeBodyData = function (buffer) {
+    BiliBiliDanmu.prototype.decodeBodyData = function (buffer) {
         return __awaiter(this, void 0, void 0, function () {
             var uIntBuffer, data, string, json;
             return __generator(this, function (_a) {
@@ -281,7 +295,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.getPopularity = function (buffer) {
+    BiliBiliDanmu.prototype.getPopularity = function (buffer) {
         return __awaiter(this, void 0, void 0, function () {
             var popularity, i;
             return __generator(this, function (_a) {
@@ -294,7 +308,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.getHeadBuffer = function (buffer, offset, length) {
+    BiliBiliDanmu.prototype.getHeadBuffer = function (buffer, offset, length) {
         return __awaiter(this, void 0, void 0, function () {
             var number, i;
             return __generator(this, function (_a) {
@@ -309,7 +323,7 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    BilibiliLiveDanmu.prototype.fillHeadBuffer = function (buffer, offset, length, data) {
+    BiliBiliDanmu.prototype.fillHeadBuffer = function (buffer, offset, length, data) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 while (length > 0) {
@@ -323,6 +337,6 @@ var BilibiliLiveDanmu = /** @class */ (function (_super) {
             });
         });
     };
-    return BilibiliLiveDanmu;
+    return BiliBiliDanmu;
 }(events_1.EventEmitter));
-exports.BilibiliLiveDanmu = BilibiliLiveDanmu;
+exports.BiliBiliDanmu = BiliBiliDanmu;

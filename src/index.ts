@@ -10,7 +10,7 @@ import {
     SEQUENCE, BODY_META_SIZE, TWO_BYTE } from "./consts";
 
 
-export class BilibiliLiveDanmu extends EventEmitter{
+export class BiliBiliDanmu extends EventEmitter{
     private roomId:number = 0
     private realRoomId: number = 0
     private ws: WebSocket | null = null

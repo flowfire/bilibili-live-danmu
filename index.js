@@ -1,1 +1,1 @@
-module.exports.BilibiliLiveDanms = require("./dist/index.js").BilibiliLiveDanmu
+module.exports.BilibiliLiveDanmu = require("./dist/index.js").BiliBiliDanmu
