@@ -1,0 +1,1 @@
+module.exports.BilibiliLiveDanms = require("./dist/index.js").BilibiliLiveDanmu
