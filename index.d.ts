@@ -24,9 +24,9 @@ declare class BilibiliLiveDanmu extends EventEmitter{
     /** 
      * @function on 监听器函数
      * @param {EVENTS} events 触发事件
-     * @param {...any} params 回调事件
+     * @param {...any} params 其他参数
      */
-    private emit(event: EVENTS, ...params: any[]): boolean
+    emit(event: EVENTS, ...params: any[]): boolean
 
     /** 
      * @function on 监听器函数

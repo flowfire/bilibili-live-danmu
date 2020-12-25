@@ -20,7 +20,7 @@ export class BiliBiliDanmu extends EventEmitter{
         this.roomId = roomId
         this.init()
     }
-    private emit(event: EVENTS, ...params: any[]): boolean{
+    emit(event: EVENTS, ...params: any[]): boolean{
         return super.emit(event, ...params)
     }
     private async init(){
